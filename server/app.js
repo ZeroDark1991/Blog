@@ -1,44 +1,50 @@
 'use strict'
 
+/* DB init starts */
 const fs = require('fs')
 const path = require('path')
-  // const mongoose = require('mongoose')
-  // const db = 
+const mongoose = require('mongoose')
+const db = 'mongodb://localhost/blog'
+const port = 3000
 
-// mongoose.Promise = require('bluebird')
+// connect DB
+mongoose.Promise = require('bluebird')
+mongoose.connect(db)
 
-// const models_path = path.join(__dirname, 'app/models')
+// retrieve DB models
+const models_path = path.join(__dirname, 'app/models')
+const dbInit = function(_Path) {
+  fs
+    .readdirSync(_Path)
+    .forEach(file => {
+      let filePath = path.join(models_path, '/' + file)
+      let stat = fs.statSync(filePath)
 
-// const walk = function(modelPath) {
-//   fs
-//     .readdirSync(modelPath)
-//     .forEach(file => {
-//     })
-// }
+      if (stat.isFile()) {
+        if (/(.*)\.(js|coffee)/.test(file)) {
+          require(file)
+        }
+      } else if (stat.isDirectory()) {
+        dbInit(file)
+      }
+    })
+}
+dbInit(models_path)
+/* DB init ends */
 
+/* Application init starts */
 const koa = require('koa')
 const logger = require('koa-logger')
 const session = require('koa-session')
 const bodyParser = require('koa-bodyparser')
-const router = require('koa-router')({ prefix: '/api' })
 const app = koa()
 
-const port = 3000
+const router = require(path.join(__dirname, 'config/routes'))
 
 app.keys = ['secret-session', 'zerodark1991-blog']
 app.use(logger())
 app.use(session(app))
 app.use(bodyParser())
-
-router.get('/', function*(next) {
-  this.body = `time ${this.session.icr}`
-  console.log(this.session)
-})
-
-app.use(function*(next) {
-  this.session.icr ? this.session.icr++ : this.session.icr = 1
-  yield next
-})
 
 app
   .use(router.routes())

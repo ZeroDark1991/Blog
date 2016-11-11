@@ -27,7 +27,7 @@ module.exports = {
     publicPath: defaultSettings.publicPath,
     noInfo: false,
     proxy: {
-      '/api':{
+      '/api': {
         target: 'http://127.0.0.1:3000/api',
         ignorePath: false, // true时删除代理时请求中的path
         secure: false,
