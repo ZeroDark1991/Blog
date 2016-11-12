@@ -3,8 +3,8 @@
 const Router = require('koa-router')
 const router = new Router({ prefix: '/api' })
 const path = require('path')
-const User = require(path.resolve(__dirname, '../app/controllers/user'))
-const App = require(path.resolve(__dirname, '../app/controllers/app'))
+const User = require('../app/controllers/user')
+const App = require('../app/controllers/app')
 
 // users
 router.post('/u/signup', User.signup)

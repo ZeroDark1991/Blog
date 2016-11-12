@@ -12,7 +12,7 @@ mongoose.Promise = require('bluebird')
 mongoose.connect(db)
 
 // retrieve DB models
-const models_path = path.join(__dirname, 'app/models')
+const models_path = path.join(__dirname, '/app/models')
 const dbInit = function(_Path) {
   fs
     .readdirSync(_Path)
@@ -22,10 +22,10 @@ const dbInit = function(_Path) {
 
       if (stat.isFile()) {
         if (/(.*)\.(js|coffee)/.test(file)) {
-          require(file)
+          require(filePath)
         }
       } else if (stat.isDirectory()) {
-        dbInit(file)
+        dbInit(file) // 深度遍历
       }
     })
 }
@@ -45,6 +45,16 @@ app.keys = ['secret-session', 'zerodark1991-blog']
 app.use(logger())
 app.use(session(app))
 app.use(bodyParser())
+
+app.use(function *(next){
+  try {
+    yield next
+  }
+  catch (e) {
+    console.log(e)
+    this.body = e
+  }
+})
 
 app
   .use(router.routes())

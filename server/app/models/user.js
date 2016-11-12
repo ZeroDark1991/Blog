@@ -1,6 +1,6 @@
 'use strict'
-const Schema = require('mongoose').Schema
-const UserSchema = new Schema({
+const mongoose = require('mongoose')
+const UserSchema = new mongoose.Schema({
   phone: {
     unique: true,
     type: String
@@ -14,17 +14,21 @@ const UserSchema = new Schema({
       type: Date,
       default: Date.now()
     },
-    updateAt: {
+    updatedAt: {
       type: Date,
       default: Date.now()
     }
   }
 })
 
-UserSchema.pre('save', next => {
-  if (!this.isNew) {
-    this.meta.updateAt = Date.now
+UserSchema.pre('save', function(next) {
+  if (this.isNew) {
+    this.meta.createdAt = this.meta.updatedAt = Date.now()
   }
+  else {
+    this.meta.updatedAt = Date.now() 
+  }
+  next()
 })
 
 const UserModel = mongoose.model('User', UserSchema)
