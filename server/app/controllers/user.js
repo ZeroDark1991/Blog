@@ -1,6 +1,7 @@
 'use strict'
 
 const xss = require('xss')
+const uuid = require('uuid')
 const APIError = require('./api-error')
 const mongoose = require('mongoose')
 

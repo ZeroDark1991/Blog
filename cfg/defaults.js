@@ -9,6 +9,7 @@
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
 const dfltPort = 8080;
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 /**
  * Get the default modules object for webpack
@@ -16,17 +17,17 @@ const dfltPort = 8080;
  */
 function getDefaultModules() {
   return {
-    preLoaders: [
-      {
-        test: /\.(js|jsx)$/,
-        include: srcPath,
-        loader: 'eslint-loader'
-      }
-    ],
+    // preLoaders: [
+    //   {
+    //     test: /\.(js|jsx)$/,
+    //     include: srcPath,
+    //     loader: 'eslint-loader'
+    //   }
+    // ],
     loaders: [
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
       },
       {
         test: /\.sass/,
