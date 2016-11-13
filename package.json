@@ -4,7 +4,7 @@
   "description": "blog site built on React & Koa",
   "main": "",
   "scripts": {
-    "start": "node server.js --env=dev",
+    "start": "node server.js --env=dev --quiet --history-api-fallback",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false",
     "posttest": "npm run lint",
