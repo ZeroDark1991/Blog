@@ -2,7 +2,7 @@
 
 const APIError = require('./api-error')
 
-exports.signature = function*(next) {
+exports.signature = function*() {
   // this.body = {
   //   sucess: true,
   //   signature: 'sign%ef09ac09234'

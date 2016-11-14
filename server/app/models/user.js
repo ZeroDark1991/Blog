@@ -1,4 +1,5 @@
 'use strict'
+
 const mongoose = require('mongoose')
 const UserSchema = new mongoose.Schema({
   phone: {
@@ -25,7 +26,7 @@ UserSchema.pre('save', function(next) {
   if (this.isNew) {
     this.meta.createdAt = Date.now()
   }
-  this.meta.updatedAt = Date.now() 
+  this.meta.updatedAt = Date.now()
   next()
 })
 

@@ -1,13 +1,13 @@
 'use strict'
 
 const xss = require('xss')
-const uuid = require('uuid')
+  // const uuid = require('uuid')
 const APIError = require('./api-error')
 const mongoose = require('mongoose')
 
 const User = mongoose.model('User')
 
-exports.signup = function*(next) {
+exports.signup = function*() {
   let phone = this.request.body.phone.trim()
   let user = yield User.findOne({
     phone: phone
@@ -17,15 +17,13 @@ exports.signup = function*(next) {
     user = new User({
       phone: xss(phone)
     })
-  }
-  else {
+  } else {
     user.verifyCode = '123123'
   }
 
-  try{
+  try {
     user = yield user.save()
-  }
-  catch (e) {
+  } catch (e) {
     throw new APIError()
   }
 
@@ -35,13 +33,13 @@ exports.signup = function*(next) {
 
 }
 
-exports.verify = function*(next) {
+exports.verify = function*() {
   this.body = {
     success: true
   }
 }
 
-exports.update = function*(next) {
+exports.update = function*() {
   this.body = {
     success: true
   }

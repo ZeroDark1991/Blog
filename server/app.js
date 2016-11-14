@@ -24,12 +24,10 @@ app.use(session(app))
 app.use(bodyParser())
 
 // error handle middleware
-app.use(function *(next){
+app.use(function*(next) {
   try {
     yield next
-  }
-  catch (e) {
-    console.log(e)
+  } catch (e) {
     this.body = e
   }
 })
