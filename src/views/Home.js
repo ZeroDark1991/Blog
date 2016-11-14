@@ -1,10 +1,21 @@
 import React from 'react'
+import config from 'config'
+const agent = config.agent
 
 let yeomanImage = require('../images/yeoman.png')
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
+
+    agent
+    .get('/api/posts')
+    .then(data => {
+      console.log(data)
+    })
+    .catch(e => {
+      console.log(data)
+    })
   }
 
   render(){
