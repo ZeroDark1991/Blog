@@ -3,7 +3,9 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
+.pure-g, .pure-g [class *="pure-u"] {
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+}
 a {
     text-decoration: none;
     color: rgb(61, 146, 201);

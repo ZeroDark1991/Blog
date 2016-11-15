@@ -9,6 +9,7 @@ class Home extends React.Component {
     super(props)
     this.state = { blogList: [] }
     this.fetchBlogList()
+    console.info('  💻 💻 💻 💻    💻 💻 💻 💻\n        💻      💻\n      💻        💻 💻 💻 💻\n    💻          💻\n  💻            💻\n💻 💻 💻 💻      💻 💻 💻 💻')
   }
 
   fetchBlogList(){
@@ -35,16 +36,20 @@ class Home extends React.Component {
             <h1 className="content-subhead">Recent Posts</h1>
               {
                 this.state.blogList.map(item => {
+                  let date = new Date(item.author.meta.createdAt)
+                  let time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+
                   return(
                     <section className="post" key={ item.title }>
                       <header className="post-header">
-                        <h2 className="post-title"><Link to='/about' style={{color: 'purple'}}>{ item.title }</Link></h2>
+                        <h2 className="post-title"><Link to={'/post/'+item.id} style={{color: '#222'}}>{ item.title }</Link></h2>
                         <p className="post-meta">
-                            By <a className="post-author" href="#">{ item.author.phone }</a>
+                            By <a className="post-author" href="#">{ item.author.nickName } </a>
+                            At {time}
                             {
                               item.tag
-                              ?<span>under <a className="post-category post-category-js" href="#">{ item.tag }</a></span>
-                              :null
+                              ? <span>under <a className="post-category post-category-js" href="#">{ item.tag }</a></span>
+                              : null
                             }
                         </p>
                       </header>

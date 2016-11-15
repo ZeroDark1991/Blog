@@ -1,24 +1,33 @@
 'use strict'
 
 const xss = require('xss')
-  // const uuid = require('uuid')
+const uuid = require('uuid')
 const APIError = require('./api-error')
 const mongoose = require('mongoose')
 
 const User = mongoose.model('User')
 
 exports.signup = function*() {
-  let phone = this.request.body.phone.trim()
+  let nickName = this.request.body.nickName.trim()
+  let passWord = this.request.body.passWord.trim()
   let user = yield User.findOne({
-    phone: phone
+    nickName: nickName
   }).exec()
+
+  console.log(passWord)
 
   if (!user) {
     user = new User({
-      phone: xss(phone)
+      nickName: xss(nickName),
+      passWord: xss(passWord),
+      accessToken: uuid.v4()
     })
+    console.log(user)
   } else {
-    user.verifyCode = '123123'
+    console.log(user)    
+    if(user.passWord != passWord){
+      throw new APIError('wrong_password')
+    }
   }
 
   try {
@@ -29,7 +38,8 @@ exports.signup = function*() {
 
   this.body = {
     success: true,
-    userId: user._id
+    userId: user._id,
+    accessToken: user.accessToken
   }
 
 }

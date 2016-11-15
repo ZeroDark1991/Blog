@@ -3,17 +3,14 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const UserSchema = new Schema({
-  phone: {
-    unique: true,
-    type: String
-  },
+  nickName: String,
+  passWord: String,
   posts: [{
     type: Schema.Types.ObjectId,
     ref: 'Post'
   }],
   verifyCode: String,
   accessToken: String,
-  nickName: String,
   avatar: String,
   meta: {
     createdAt: {

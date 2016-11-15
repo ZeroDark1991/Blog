@@ -9,9 +9,12 @@ const Post = mongoose.model('Post')
 
 // 获取posts
 exports.list = function*() {
+  let query = this.query.id
+    ? { _id : this.query.id }
+    : { }
   let data
   try {
-    data = yield Post.find().populate('author', 'phone _id').exec()
+    data = yield Post.find(query).populate('author', 'nickName meta.createdAt').exec()
   } catch (error) {
     throw new APIError()
   }

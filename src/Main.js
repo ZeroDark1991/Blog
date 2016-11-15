@@ -11,7 +11,7 @@ class AppComponent extends React.Component {
       <div id="layout" className="pure-g">
         <div className="sidebar pure-u-1 pure-u-md-1-4">
             <div className="header">
-                <h1 className="brand-title">A Sample Blog</h1>
+                <h1 className="brand-title"><Link to='/' style={{ color: '#fff' }}>A Sample Blog</Link></h1>
                 <h2 className="brand-tagline">Creating a blog layout using Pure</h2>
 
                 <nav className="nav">

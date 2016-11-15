@@ -13,5 +13,10 @@ module.exports = {
     success: false,
     code: 'imcomplete form',
     message: '信息填写不完整'
+  },
+  wrong_password: {
+    success: false,
+    code: 'wrong password',
+    message: '密码不正确'
   }
 }
