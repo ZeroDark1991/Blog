@@ -1,11 +1,16 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const UserSchema = new mongoose.Schema({
+const Schema = mongoose.Schema
+const UserSchema = new Schema({
   phone: {
     unique: true,
     type: String
   },
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
   verifyCode: String,
   accessToken: String,
   nickName: String,

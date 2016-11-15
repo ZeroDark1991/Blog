@@ -8,10 +8,10 @@ const md = require('markdown-it')()
 const Post = mongoose.model('Post')
 
 // 获取posts
-exports.list = function*(next) {
+exports.list = function*() {
   let data
   try {
-    data = yield Post.find().exec()  
+    data = yield Post.find().populate('author', 'phone _id').exec()
   } catch (error) {
     throw new APIError()
   }
@@ -20,12 +20,13 @@ exports.list = function*(next) {
     let content = item.content
       ? md.render(item.content)
       : ''
-    
+
     return {
-      id : item._id,
+      id: item._id,
       title: item.title,
-      description : item.description,
+      description: item.description,
       content: content,
+      author: item.author
     }
   })
 
@@ -36,7 +37,7 @@ exports.list = function*(next) {
 }
 
 // 新增posts
-exports.create = function*(next) {
+exports.create = function*() {
   let info = this.request.body
 
   if(!info.title) {
@@ -44,10 +45,14 @@ exports.create = function*(next) {
   }
 
   let post = new Post({
-    title: info.title,
-    description: info.description || '...',
-    content: info.content || 'plain content'
+    title: xss(info.title),
+    description: xss(info.description) || '...',
+    content: xss(info.content) || 'plain content'
   })
+  
+  if(info.author) {
+    post.author = info.author
+  }
 
   try {
     yield post.save()
@@ -63,11 +68,11 @@ exports.create = function*(next) {
 }
 
 // 修改posts
-exports.update = function*(next) {
+exports.update = function*() {
 
 }
 
 // 删除posts
-exports.delete = function*(next) {
+exports.delete = function*() {
 
 }

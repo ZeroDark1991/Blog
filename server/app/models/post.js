@@ -1,15 +1,17 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const PostSchema = new mongoose.Schema({
+const Schema = mongoose.Schema
+const PostSchema = new Schema({
   title: String,
   description: String,
   content: String,
-  tag: {
-    type: String,
-    index: true
+  tag: String,
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
-  comments: [{ author: String, content: String, data: Date}],
   meta: {
     createdAt: {
       type: Date,

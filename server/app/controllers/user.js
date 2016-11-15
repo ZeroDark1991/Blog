@@ -28,7 +28,8 @@ exports.signup = function*() {
   }
 
   this.body = {
-    success: true
+    success: true,
+    userId: user._id
   }
 
 }
