@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const mongoose = require('mongoose')
-const db = 'mongodb://localhost/blog'
+const db = 'mongodb://162.243.68.36/blog'
 
 // connect DB
 mongoose.Promise = require('bluebird')
