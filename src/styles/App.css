@@ -1,2 +1,6 @@
 /* Base Application Styles */
 
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

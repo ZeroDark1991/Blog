@@ -8,40 +8,39 @@ import 'whatwg-fetch'
 
 // Settings configured here will be merged into the final config object.
 export default {
-	agent: {
-		get(url, query) {
-			return fetch(queryParser(url, query), config._get)
-			.then(checkStatus)
-			.then(jsonParser)
-		},
-		post(url, body) {
-			return fetch(url, config._post(body))
-			.then(checkStatus)
-			.then(jsonParser)
-		}
-	}
+  agent: {
+    get(url, query) {
+      return fetch(queryParser(url, query), config._get)
+        .then(checkStatus)
+        .then(jsonParser)
+    },
+    post(url, body) {
+      return fetch(url, config._post(body))
+        .then(checkStatus)
+        .then(jsonParser)
+    }
+  }
 }
 
 const config = {
-	_get: {
-			credentials: 'same-origin'
-	},
-	_post(body) {
-		if(!body){
-			body = ''
-		}
-		else if( typeof body != 'string') {
+  _get: {
+    credentials: 'same-origin'
+  },
+  _post(body) {
+    if (!body) {
+      body = ''
+    } else if (typeof body != 'string') {
       body = JSON.stringify(body)
-		}
+    }
 
-		return Object.assign({}, this.get, {
-		  method: 'POST',
-		  headers: {
-		    'Content-Type': 'application/json'
-		  },
-			body: body
-		})
-	},	
+    return Object.assign({}, this.get, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    })
+  }
 }
 
 const checkStatus = function(response) {
@@ -55,12 +54,12 @@ const checkStatus = function(response) {
 }
 
 const jsonParser = function(response) {
-	return response.json()
+  return response.json()
 }
 
 const queryParser = function(url, query) {
-	if(!query) return url
+  if (!query) return url
 
-	let parsedQuery = Object.keys(query).map(key => `${key}=${query[key]}`).join('&')
-	return `${url}?${parsedQuery}`
+  let parsedQuery = Object.keys(query).map(key => `${key}=${query[key]}`).join('&')
+  return `${url}?${parsedQuery}`
 }
