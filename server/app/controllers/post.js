@@ -6,6 +6,7 @@ const APIError = require('./api-error')
 const md = require('markdown-it')()
 
 const Post = mongoose.model('Post')
+const User = mongoose.model('User')
 
 // 获取posts
 exports.list = function*() {
@@ -43,8 +44,24 @@ exports.list = function*() {
 exports.create = function*() {
   let info = this.request.body
 
-  if(!info.title) {
+  if(!info.title || !info.author || !info.content || !info.accessToken) {
     throw new APIError('incomplete')
+  }
+
+  let user
+  try {
+    user = yield User.findOne({ _id: info.author })
+  }
+  catch(e) {
+    throw new APIError()
+  }
+  if(!user || user.accessToken != info.accessToken){
+    console.log(1)
+    this.body = {
+      success: false,
+      message: '用户名不存在'
+    }
+    return
   }
 
   let post = new Post({

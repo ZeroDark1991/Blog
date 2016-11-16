@@ -14,17 +14,13 @@ exports.signup = function*() {
     nickName: nickName
   }).exec()
 
-  console.log(passWord)
-
   if (!user) {
     user = new User({
       nickName: xss(nickName),
       passWord: xss(passWord),
       accessToken: uuid.v4()
     })
-    console.log(user)
   } else {
-    console.log(user)    
     if(user.passWord != passWord){
       throw new APIError('wrong_password')
     }

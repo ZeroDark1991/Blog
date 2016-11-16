@@ -17,10 +17,9 @@ export default class Post extends React.Component {
             createdAt: ''
           }
         }
-      }
+      },
+      postTime: ''
     }
-
-    this.fetchPost()
   }
 
   fetchPost(){
@@ -30,18 +29,27 @@ export default class Post extends React.Component {
       .then(data => {
         if(data.success){
           console.log(data)
+          let post = data.data[0]
+          
+          let date = new Date(post.author.meta.createdAt)
+          let time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
           self.setState({
-            post: data.data[0]
+            post: post,
+            postTime: time
           })
         }
       })
   }
 
+  componentWillMount(){
+    this.fetchPost()
+  }
+
   render() {
-    let date, time, post = this.state.post
-    if(post.author){
-      date = new Date(post.author.meta.createdAt)
-      time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    let post = this.state.post
+
+    if(!post.title){
+      return <div className="content pure-u-1 pure-u-md-3-4"></div>
     }
 
     return (
@@ -52,7 +60,7 @@ export default class Post extends React.Component {
           </h1>
           <p className="post-meta">
               By <a className="post-author" href="#">{ post.author.nickName }</a>
-              At {time}
+              At {this.state.postTime}
           </p>          
         </header>
         <div dangerouslySetInnerHTML={{__html: post.content}}>
