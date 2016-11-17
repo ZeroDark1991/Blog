@@ -13,12 +13,13 @@ export default class Post extends React.Component {
         content: '',
         description: '',
         author: {
+          nickName: '',
           meta: {
             createdAt: ''
           }
-        }
-      },
-      postTime: ''
+        },
+        postTime: ''
+      }
     }
   }
 
@@ -34,8 +35,7 @@ export default class Post extends React.Component {
           let date = new Date(post.author.meta.createdAt)
           let time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
           self.setState({
-            post: post,
-            postTime: time
+            post: Object.assign({}, post, {postTime: time})
           })
         }
       })
@@ -56,11 +56,11 @@ export default class Post extends React.Component {
       <div className="content pure-u-1 pure-u-md-3-4">
         <header className="post-header">
           <h1 className="post-title">
-            {post.title}
+            { post.title }
           </h1>
           <p className="post-meta">
               By <a className="post-author" href="#">{ post.author.nickName }</a>
-              At {this.state.postTime}
+              At { post.postTime }
           </p>          
         </header>
         <div dangerouslySetInnerHTML={{__html: post.content}}>

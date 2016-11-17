@@ -23,9 +23,10 @@ module.exports = {
     contentBase: './src/',
     historyApiFallback: true,
     hot: true,
+    inline: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
-    noInfo: false,
+    noInfo: true,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:3000',

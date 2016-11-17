@@ -1,7 +1,6 @@
 require('styles/common.css')
 require('styles/App.css')
 
-
 import React from 'react'
 import Sidebar from 'components/Sidebar'
 
