@@ -1,4 +1,4 @@
-const homeList = (state= [], action) => {
+const homeList = (state = [], action) => {
   switch(action.type) {
     case 'PUSH_HOMELIST':
       return [

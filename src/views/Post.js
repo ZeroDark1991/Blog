@@ -24,9 +24,10 @@ export default class Post extends React.Component {
   }
 
   fetchPost(){
+    let { params, postList, addPost } = this.props
     let self = this
     agent
-      .get('/api/posts', { id: this.props.params.postId })
+      .get('/api/posts', { id: params.postId })
       .then(data => {
         if(data.success){
           console.log(data)
@@ -34,21 +35,23 @@ export default class Post extends React.Component {
           
           let date = new Date(post.author.meta.createdAt)
           let time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-          self.setState({
-            post: Object.assign({}, post, {postTime: time})
-          })
+          Object.assign(post, {postTime: time})
+          addPost(post)
         }
       })
   }
 
   componentWillMount(){
-    this.fetchPost()
+    let { params, postList, addPost } = this.props
+    if(!postList[params.postId]){
+      this.fetchPost()
+    }
   }
 
   render() {
-    let post = this.state.post
+    let post = this.props.postList[this.props.params.postId]
 
-    if(!post.title){
+    if(!post){
       return <div className="content pure-u-1 pure-u-md-3-4"></div>
     }
 

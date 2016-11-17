@@ -1,7 +1,12 @@
 require('styles/common.css')
 require('styles/App.css')
 
-import React from 'react'
+/*
+*  { cloneElement({ ...this.props }.children, { ...this.props }) }
+*   替代 { this.props.children } 以传递props中的state 和 actions
+*/
+
+import React, { cloneElement }from 'react'
 import Sidebar from 'components/Sidebar'
 
 class AppComponent extends React.Component {
@@ -9,13 +14,10 @@ class AppComponent extends React.Component {
     return (
       <div id="layout" className="pure-g">
 				<Sidebar />
-        { this.props.children }
+        { cloneElement({ ...this.props }.children, { ...this.props }) }
       </div>
     )
   }
 }
-
-AppComponent.defaultProps = {
-};
 
 export default AppComponent
