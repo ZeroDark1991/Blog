@@ -1,7 +1,7 @@
 'use strict'
 
 import Promise from 'promise-polyfill'
-import setAsap from 'setAsap'
+import setAsap from 'setasap'
 Promise._immediateFn = setAsap
 
 import 'whatwg-fetch'
